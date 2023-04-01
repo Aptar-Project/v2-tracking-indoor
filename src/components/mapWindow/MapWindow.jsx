@@ -15,16 +15,18 @@ export const MapWindow = () => {
   const [positionByTags, setPositionByTags] = useState([]);
 
   useEffect(() => {
-    tags.map((tag) => {
-      tag.posizioni.map(
-        ({ latitudine, longitudine, identificationCode, timestamp }) => {
-          console.log(latitudine);
-          positionByTags.push({ lat: latitudine, lng: longitudine });
-        }
-      );
-    });
-    setLoadingPositions(true);
-    console.log(positionByTags);
+    setInterval(
+      setPositionByTags(
+        tags.map((tag) =>
+          tag.posizioni.map(
+            ({ latitudine, longitudine, identificationCode, timestamp }) => {
+              return { lat: latitudine, lng: longitudine };
+            }
+          )
+        )
+      ),
+      1000
+    );
   }, [tags]);
 
   return (
@@ -52,13 +54,17 @@ export const MapWindow = () => {
                   lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
                 }}
               />
-              {loadingPositions ? (
-                <Polyline
-                  pathOptions={{ color: "red" }}
-                  positions={positionByTags}
-                />
+              {positionByTags[0] ? (
+                <>
+                  <Polyline
+                    pathOptions={{ color: "red" }}
+                    positions={positionByTags[index]}
+                  />
+                </>
               ) : (
-                <Polyline pathOptions={{ color: "red" }} positions={[]} />
+                <>
+                  <Polyline pathOptions={{ color: "red" }} positions={[]} />
+                </>
               )}
 
               {/* {tags[0] ? (

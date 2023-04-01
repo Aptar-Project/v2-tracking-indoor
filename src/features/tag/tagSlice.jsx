@@ -11,7 +11,7 @@ const initialState = {
   tagsIcon: L.icon({
     iconUrl: tagsIcon,
     iconSize: [50, 50],
-    iconAnchor: [10, 45],
+    iconAnchor: [25, 48],
     popupAnchor: [0, 0],
   }),
   detailTag: {},
