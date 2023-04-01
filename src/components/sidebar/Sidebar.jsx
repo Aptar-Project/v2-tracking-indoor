@@ -38,10 +38,10 @@ export const Sidebar = () => {
               <span>Sensori</span>
             </li>
           </NavLink>
-          <NavLink to="/users" style={{ textDecoration: "none" }}>
+          <NavLink to="/tags" style={{ textDecoration: "none" }}>
             <li>
               <GroupIcon className="icon" />
-              <span>Users</span>
+              <span>Tags</span>
             </li>
           </NavLink>
           <NavLink to="/positions" style={{ textDecoration: "none" }}>

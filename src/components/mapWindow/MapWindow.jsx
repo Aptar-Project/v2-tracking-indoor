@@ -1,23 +1,16 @@
 import { useSelector } from "react-redux";
 import { MapContainer, ImageOverlay, Marker, Polyline } from "react-leaflet";
-import "./mapWindow.css";
 import { Container } from "@mui/system";
-import { LatLngBounds } from "leaflet";
+import "./mapWindow.css";
 
 export const MapWindow = () => {
   const { center, zoom, image, crs, imageBounds, marker } = useSelector(
     (store) => store.map
   );
 
-  const bounds = new LatLngBounds(
-    [40.712216, -74.22655],
-    [40.773941, -74.12544]
-  );
-
-  console.log(bounds);
   return (
     <>
-      <Container style={{ width: 800, height: 570, marginBottom: 100 }}>
+      <Container style={{ width: 800, height: 400, marginBottom: 100 }}>
         <h1>Mappa</h1>
         <MapContainer
           className="map-container"
@@ -30,10 +23,7 @@ export const MapWindow = () => {
           dragging={false}
           doubleClickZoom={() => disable}
         >
-          <ImageOverlay
-            url="https://facts.net/wp-content/uploads/2020/09/peter-griffin-facts.png"
-            bounds={imageBounds}
-          />
+          <ImageOverlay url={image} bounds={imageBounds} />
           {/* {users.map((user, index) => (
             <>
               <Marker

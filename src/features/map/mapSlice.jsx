@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import map from "../../assets/map.jpg";
-import L, { LatLngBounds } from "leaflet";
+import L from "leaflet";
 import icon from "../../assets/icons/user.png";
 
 const initialState = {
   center: [350, 350],
   crs: L.CRS.Simple,
   image: map,
-  imageBounds: new LatLngBounds([0, 0], [706, 706]),
+  zoom: -1,
+  imageBounds: [
+    [0, 0],
+    [706, 740],
+  ],
   marker: L.icon({
     iconUrl: icon,
     iconSize: [50, 50],
