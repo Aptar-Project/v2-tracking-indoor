@@ -1,26 +1,35 @@
 import { Box, Grid, Typography } from "@mui/material";
-import SensorsIcon from "@mui/icons-material/Sensors";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchSensor } from "../../features/sensor/sensorSlice";
 import { useParams } from "react-router-dom";
+import { fetchTag } from "../../features/tag/tagSlice";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 
-export const DetailSensorPage = () => {
-  const { detailSensor } = useSelector((store) => store.sensor);
+export const DetailTagPage = () => {
+  const { detailTag } = useSelector((store) => store.tag);
 
   const dispatch = useDispatch();
+
+  console.log(detailTag.posizioni);
 
   let { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchSensor(id));
+    dispatch(fetchTag(id));
   }, [dispatch]);
 
   const columns = [
-    { field: "latitude", headerName: "Latitude", width: 200 },
-    { field: "longitude", headerName: "Longitude", width: 200 },
+    {
+      field: "identificationCode",
+      headerName: "identificationCode",
+      width: 200,
+    },
+    { field: "latitudine", headerName: "Latitude", width: 200 },
+    { field: "longitudine", headerName: "Longitude", width: 200 },
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
   return (
@@ -42,38 +51,44 @@ export const DetailSensorPage = () => {
           paddingBottom={4}
         >
           <Typography variant="h4">
-            <SensorsIcon /> Dettaglio Sensore
+            <LocalOfferIcon /> Dettaglio Tag
           </Typography>
+          <IconButton>
+            <EditIcon sx={{ color: "#6439ff" }} />
+          </IconButton>
         </Box>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography component="div">
               <Box sx={{ mb: 1 }}>
                 <strong>Identification Code: </strong>
-                {detailSensor.identificationCode}
+                {detailTag.identificationCode}
               </Box>
               <Box sx={{ mb: 1 }}>
                 <strong>Frequenza: </strong>
-                {detailSensor.frequenza}
+                {detailTag.frequenza}
               </Box>
               <Box sx={{ mb: 1 }}>
-                <strong>Protocollo: </strong>
-                {detailSensor.protocollo}
+                <strong>Portata:</strong> {detailTag.portata}
+              </Box>
+              <Box sx={{ mb: 1 }}>
+                <strong>Alimentazione:</strong> {detailTag.alimentazione}
               </Box>
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
             <Typography component="div">
               <Box sx={{ mb: 1 }}>
-                <strong>Potenza Trasmissione: </strong>
-                {detailSensor.potenzaTrasmissione}
+                <strong>Resistenza Ambientale:</strong> {detailTag.resistenza}
               </Box>
               <Box sx={{ mb: 1 }}>
-                <strong>Antenna: </strong> {detailSensor.antenna}
+                <strong>Memoria:</strong> {detailTag.portata}
               </Box>
               <Box sx={{ mb: 1 }}>
-                <strong>Alimentazione: </strong>
-                {detailSensor.alimentazione}
+                <strong>Chip:</strong> {detailTag.portata}
+              </Box>
+              <Box sx={{ mb: 1 }}>
+                <strong>Antenna:</strong> {detailTag.portata}
               </Box>
             </Typography>
           </Grid>
@@ -88,12 +103,27 @@ export const DetailSensorPage = () => {
         <Typography variant="h4" gutterBottom>
           <ExploreIcon /> Cronologia Posizioni
         </Typography>
-        <DataGrid
-          rows={[]}
-          columns={columns}
-          pageSize={10}
-          sx={{ height: "auto" }}
-        />
+
+        {/* PROBLEMA */}
+        {detailTag.posizioni ? (
+          <DataGrid
+            getRowId={(row) => row.timestamp}
+            rows={detailTag.posizioni}
+            columns={columns}
+            pageSize={10}
+            sx={{ height: "auto" }}
+          />
+        ) : (
+          <>
+            <DataGrid
+              getRowId={(row) => row.identificationCode}
+              rows={[]}
+              columns={columns}
+              pageSize={10}
+              sx={{ height: "auto" }}
+            />
+          </>
+        )}
       </Box>
     </>
   );

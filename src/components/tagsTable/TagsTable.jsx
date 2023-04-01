@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTagList } from "../../features/tag/tagSlice";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 export const TagsTable = () => {
   const { tagsStatus, tags } = useSelector((store) => store.tag);
@@ -20,22 +21,22 @@ export const TagsTable = () => {
     {
       field: "identificationCode",
       headerName: "Identification Code",
-      width: 340,
+      width: 300,
     },
     {
       field: "memoria",
       headerName: "Memoria",
-      width: 340,
+      width: 300,
     },
     {
       field: "frequenza",
       headerName: "Frequenza",
-      width: 340,
+      width: 300,
     },
     {
       field: "portata",
       headerName: "Portata",
-      width: 340,
+      width: 300,
     },
   ];
 
@@ -47,9 +48,15 @@ export const TagsTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction" style={{ display: "flex" }}>
-            <IconButton variant="outlined" size="small" className="viewButton">
-              <EditIcon className="icon" />
-            </IconButton>
+            <Link to={`${params.row.identificationCode}`}>
+              <IconButton
+                variant="outlined"
+                size="small"
+                className="viewButton"
+              >
+                <EditIcon className="icon" />
+              </IconButton>
+            </Link>
           </div>
         );
       },

@@ -2,11 +2,30 @@ import { useSelector } from "react-redux";
 import { MapContainer, ImageOverlay, Marker, Polyline } from "react-leaflet";
 import { Container } from "@mui/system";
 import "./mapWindow.css";
+import { useEffect, useState } from "react";
 
 export const MapWindow = () => {
   const { center, zoom, image, crs, imageBounds, marker } = useSelector(
     (store) => store.map
   );
+
+  const { tags, tagsIcon } = useSelector((store) => store.tag);
+
+  const [loadingPositions, setLoadingPositions] = useState(false);
+  const [positionByTags, setPositionByTags] = useState([]);
+
+  useEffect(() => {
+    tags.map((tag) => {
+      tag.posizioni.map(
+        ({ latitudine, longitudine, identificationCode, timestamp }) => {
+          console.log(latitudine);
+          positionByTags.push({ lat: latitudine, lng: longitudine });
+        }
+      );
+    });
+    setLoadingPositions(true);
+    console.log(positionByTags);
+  }, [tags]);
 
   return (
     <>
@@ -24,24 +43,35 @@ export const MapWindow = () => {
           doubleClickZoom={() => disable}
         >
           <ImageOverlay url={image} bounds={imageBounds} />
-          {/* {users.map((user, index) => (
-            <>
+          {tags.map((tag, index) => (
+            <div key={index}>
               <Marker
-                key={user.identificationCode}
-                icon={userIcon}
+                icon={tagsIcon}
                 position={{
-                  lat: user.posizioni[user.posizioni.length - 1].latitudine,
-                  lng: user.posizioni[user.posizioni.length - 1].longitudine,
+                  lat: tag.posizioni[tag.posizioni.length - 1].latitudine,
+                  lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
                 }}
               />
+              {loadingPositions ? (
+                <Polyline
+                  pathOptions={{ color: "red" }}
+                  positions={positionByTags}
+                />
+              ) : (
+                <Polyline pathOptions={{ color: "red" }} positions={[]} />
+              )}
 
-              <Polyline
-                pathOptions={{ color: "red" }}
-                positions={positionByUsers[index]}
-              />
-            </>
+              {/* {tags[0] ? (
+                <Polyline
+                  pathOptions={{ color: "red" }}
+                  positions={positionByTags[index]}
+                />
+              ) : (
+                <></>
+              )} */}
+            </div>
           ))}
-          {sensors.map((sensor) => (
+          {/* {sensors.map((sensor) => (
             <Marker
               key={sensor.identificationCode}
               icon={sensorIcon}

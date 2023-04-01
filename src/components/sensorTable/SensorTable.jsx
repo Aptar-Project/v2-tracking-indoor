@@ -4,6 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchSensorList } from "../../features/sensor/sensorSlice";
+import { Link } from "react-router-dom";
 
 export const SensorTable = () => {
   const { sensorStatus, sensors } = useSelector((store) => store.sensor);
@@ -42,9 +43,15 @@ export const SensorTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction" style={{ display: "flex" }}>
-            <IconButton variant="outlined" size="small" className="viewButton">
-              <EditIcon className="icon" />
-            </IconButton>
+            <Link to={`${params.row.identificationCode}`}>
+              <IconButton
+                variant="outlined"
+                size="small"
+                className="viewButton"
+              >
+                <EditIcon className="icon" />
+              </IconButton>
+            </Link>
           </div>
         );
       },

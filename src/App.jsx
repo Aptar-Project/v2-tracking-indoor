@@ -9,6 +9,7 @@ import { MapPage } from "./pages/mapPage/MapPage";
 import { TagsPage } from "./pages/tagsPage/TagsPage";
 import { SensorPage } from "./pages/sensorsPage/SensorPage";
 import { DetailSensorPage } from "./pages/detailSensorPage/DetailSensorPage";
+import { DetailTagPage } from "./pages/detailTagPage/DetailTagPage";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route element={<BasePage />}>
               <Route path="/" element={<MapPage />} />
               <Route path="/tags" element={<TagsPage />} />
+              <Route path="/tags/:id" element={<DetailTagPage />} />
               <Route path="/sensors" element={<SensorPage />} />
               <Route path="/sensors/:id" element={<DetailSensorPage />} />
             </Route>

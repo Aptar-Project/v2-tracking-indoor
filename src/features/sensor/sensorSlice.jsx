@@ -14,7 +14,7 @@ const initialState = {
     iconAnchor: [20, 45],
     popupAnchor: [0, 0],
   }),
-  detailSensor: {}
+  detailSensor: {},
 };
 
 const GET_SENSORS = "/sensore";
@@ -35,7 +35,21 @@ export const fetchSensorList = createAsyncThunk(
   }
 );
 
-export const fetchSensor = createAsyncThunk()
+export const fetchSensor = createAsyncThunk(
+  "sensor/fetchSensor",
+  async (id) => {
+    const response = await javaAxios
+      .get(GET_SENSORS + `/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return response.data;
+  }
+);
 
 export const sensorSlice = createSlice({
   name: "sensor",
@@ -51,6 +65,17 @@ export const sensorSlice = createSlice({
         state.sensors = action.payload;
       })
       .addCase(fetchSensorList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchSensor.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchSensor.fulfilled, (state, action) => {
+        state.status = "succeded";
+        state.detailSensor = action.payload;
+      })
+      .addCase(fetchSensor.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

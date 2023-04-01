@@ -14,6 +14,7 @@ const initialState = {
     iconAnchor: [10, 45],
     popupAnchor: [0, 0],
   }),
+  detailTag: {},
 };
 
 const GET_TAGS = "/tag";
@@ -31,6 +32,19 @@ export const fetchTagList = createAsyncThunk("user/fetchUserList", async () => {
   return response.data.content;
 });
 
+export const fetchTag = createAsyncThunk("tag/fetchTag", async (id) => {
+  const response = await javaAxios
+    .get(GET_TAGS + `/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return response.data;
+});
+
 export const tagSlice = createSlice({
   name: "tag",
   initialState,
@@ -46,6 +60,17 @@ export const tagSlice = createSlice({
       })
       .addCase(fetchTagList.rejected, (state, action) => {
         state.tagsStatus = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchTag.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchTag.fulfilled, (state, action) => {
+        state.status = "succeded";
+        state.detailTag = action.payload;
+      })
+      .addCase(fetchTag.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.error.message;
       });
   },
