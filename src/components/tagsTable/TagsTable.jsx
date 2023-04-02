@@ -5,9 +5,10 @@ import { fetchTagList } from "../../features/tag/tagSlice";
 import { Container, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 
 export const TagsTable = () => {
-  const { tagsStatus, tags } = useSelector((store) => store.tag);
+  const { tagsStatus, tags, loading } = useSelector((store) => store.tag);
 
   const dispatch = useDispatch();
 
@@ -15,7 +16,7 @@ export const TagsTable = () => {
     if (tagsStatus === "idle") {
       dispatch(fetchTagList());
     }
-  }, [tagsStatus, dispatch]);
+  }, []);
 
   const contentColumn = [
     {
@@ -68,14 +69,25 @@ export const TagsTable = () => {
       <Typography variant="h3" gutterBottom>
         Tags
       </Typography>
-      <DataGrid
-        sx={{ height: 680 }}
-        rows={tags}
-        getRowId={(row) => row.identificationCode}
-        columns={contentColumn.concat(viewColumn)}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-      />
+      {!loading ? (
+        <DataGrid
+          sx={{ height: 680 }}
+          rows={tags}
+          getRowId={(row) => row.identificationCode}
+          columns={contentColumn.concat(viewColumn)}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+        />
+      ) : (
+        <div style={{ marginLeft: "40%", marginTop: "10%" }}>
+          <MoonLoader
+            color={"#3a3a47"}
+            loading={loading}
+            size={200}
+            className="centra"
+          />
+        </div>
+      )}
     </Container>
   );
 };

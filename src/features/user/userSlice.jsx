@@ -9,6 +9,7 @@ const initialState = {
   pwd: "",
   token: "",
   err: "",
+  loading: false,
   isLoggedIn: false,
   account: {},
   accountStatus: "idle",
@@ -73,14 +74,17 @@ export const userSlice = createSlice({
     builder
       .addCase(fetchAccountByEmail.pending, (state, action) => {
         state.accountStatus = "loading";
+        state.loading = true;
       })
       .addCase(fetchAccountByEmail.fulfilled, (state, action) => {
         state.accountStatus = "succeded";
         state.account = action.payload;
+        state.loading = false;
       })
       .addCase(fetchAccountByEmail.rejected, (state, action) => {
         state.accountStatus = "failed";
         state.err = action.error.message;
+        state.loading = true;
       });
   },
 });

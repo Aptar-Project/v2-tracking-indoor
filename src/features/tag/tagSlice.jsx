@@ -65,7 +65,7 @@ export const tagSlice = createSlice({
       .addCase(fetchTagList.rejected, (state, action) => {
         state.tagsStatus = "failed";
         state.error = action.error.message;
-        state.loading = false;
+        state.loading = true;
       })
       .addCase(fetchTag.pending, (state, action) => {
         state.status = "loading";

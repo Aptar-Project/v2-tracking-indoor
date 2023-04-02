@@ -2,9 +2,12 @@ import { Container, Paper, Box, Avatar, Grid, Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import userSlice, { fetchAccountByEmail } from "../../features/user/userSlice";
+import { MoonLoader } from "react-spinners";
 
 export const AccountPage = () => {
-  const { account, accountStatus } = useSelector((store) => store.user);
+  const { account, accountStatus, loading } = useSelector(
+    (store) => store.user
+  );
   const dispatch = useDispatch();
   const [accountUser, setAccountUser] = useState({});
 
@@ -27,70 +30,91 @@ export const AccountPage = () => {
         >
           Account
         </Typography>
-        <Grid container spacing={2}>
-          <Grid
-            item
-            xs={3}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box
+        {!loading ? (
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={3}
               sx={{
                 display: "flex",
-                justifyContent: "center",
                 alignItems: "center",
-                width: "10em",
-                height: "10em",
+                justifyContent: "center",
               }}
             >
-              <Avatar
-                sx={{ width: 130, height: 130 }}
-                src={"" + accountUser.immagineUtente + ""}
-              />
-            </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "10em",
+                  height: "10em",
+                }}
+              >
+                <Avatar
+                  sx={{ width: 130, height: 130 }}
+                  src={"" + accountUser.immagineUtente + ""}
+                />
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              sx={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h3>Nome: {accountUser.nome}</h3>
+              <h3>Cognome: {accountUser.cognome}</h3>
+              <h3>Email: {accountUser.email}</h3>
+              <h3>
+                Indirizzo:{" "}
+                {accountUser.indirizzo ? (
+                  <>
+                    {accountUser.indirizzo.via},{" "}
+                    {accountUser.indirizzo.numeroCivico}{" "}
+                    {accountUser.indirizzo.cap} {accountUser.indirizzo.citta}{" "}
+                    {accountUser.indirizzo.nazione}
+                  </>
+                ) : (
+                  "Non disponibile"
+                )}
+              </h3>
+            </Grid>
+            <Grid
+              item
+              xs={8}
+              sx={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+              <h3></h3>
+            </Grid>
           </Grid>
-          <Grid
-            item
-            xs={6}
-            sx={{
-              alignItems: "center",
-              justifyContent: "center",
+        ) : (
+          <div
+            style={{
+              marginLeft: "40%",
+              marginTop: "10%",
+              paddingBottom: 40,
             }}
           >
-            <h3>Nome: {accountUser.nome}</h3>
-            <h3>Cognome: {accountUser.cognome}</h3>
-            <h3>Email: {accountUser.email}</h3>
-            <h3>
-              Indirizzo:{" "}
-              {accountUser.indirizzo ? (
-                <>
-                  {accountUser.indirizzo.via},{" "}
-                  {accountUser.indirizzo.numeroCivico}{" "}
-                  {accountUser.indirizzo.cap} {accountUser.indirizzo.citta}{" "}
-                  {accountUser.indirizzo.nazione}
-                </>
-              ) : (
-                "Non disponibile"
-              )}
-            </h3>
-          </Grid>
-          <Grid
-            item
-            xs={8}
-            sx={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <h3></h3>
-            <h3></h3>
-            <h3></h3>
-            <h3></h3>
-          </Grid>
-        </Grid>
+            <MoonLoader
+              color={"#3a3a47"}
+              loading={loading}
+              size={100}
+              className="centra"
+            />
+          </div>
+        )}
       </Paper>
     </Container>
   );

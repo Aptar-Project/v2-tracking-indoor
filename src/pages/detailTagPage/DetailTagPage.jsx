@@ -19,9 +19,7 @@ export const DetailTagPage = () => {
 
   useEffect(() => {
     dispatch(fetchTag(id));
-  }, [dispatch]);
-
-  console.log(loading);
+  }, []);
 
   const columns = [
     {
@@ -121,6 +119,7 @@ export const DetailTagPage = () => {
             pageSize={10}
             rowsPerPageOptions={[5]}
             sx={{ height: 1000 }}
+            disableColumnMenu
           />
         ) : (
           <Container>

@@ -6,9 +6,12 @@ import { fetchSensorList } from "../../features/sensor/sensorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 
 export const SensorWidget = () => {
-  const { sensorStatus, sensors } = useSelector((store) => store.sensor);
+  const { sensorStatus, sensors, loading } = useSelector(
+    (store) => store.sensor
+  );
 
   const dispatch = useDispatch();
 
@@ -51,14 +54,25 @@ export const SensorWidget = () => {
   return (
     <div style={{ marginTop: "4%" }}>
       <Typography variant="h4">Sensors</Typography>
-      <DataGrid
-        sx={{ height: 320, width: 500 }}
-        rows={sensors}
-        getRowId={(row) => row.identificationCode}
-        columns={contentColumn.concat(viewColumn)}
-        pageSize={4}
-        rowsPerPageOptions={[4]}
-      />
+      {!loading ? (
+        <DataGrid
+          sx={{ height: 320, width: 500 }}
+          rows={sensors}
+          getRowId={(row) => row.identificationCode}
+          columns={contentColumn.concat(viewColumn)}
+          pageSize={4}
+          rowsPerPageOptions={[4]}
+        />
+      ) : (
+        <div style={{ marginLeft: "40%", marginTop: "10%" }}>
+          <MoonLoader
+            color={"#3a3a47"}
+            loading={loading}
+            size={100}
+            className="centra"
+          />
+        </div>
+      )}
     </div>
   );
 };

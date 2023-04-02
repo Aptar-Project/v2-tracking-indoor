@@ -60,25 +60,31 @@ export const sensorSlice = createSlice({
     builder
       .addCase(fetchSensorList.pending, (state, action) => {
         state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchSensorList.fulfilled, (state, action) => {
         state.status = "succeded";
         state.sensors = action.payload;
+        state.loading = false;
       })
       .addCase(fetchSensorList.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+        state.loading = true;
       })
       .addCase(fetchSensor.pending, (state, action) => {
         state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchSensor.fulfilled, (state, action) => {
         state.status = "succeded";
         state.detailSensor = action.payload;
+        state.loading = false;
       })
       .addCase(fetchSensor.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+        state.loading = true;
       });
   },
 });

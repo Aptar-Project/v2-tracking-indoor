@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTagList } from "../../features/tag/tagSlice";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 
 export const TagWidget = () => {
   const { tagsStatus, tags, loading } = useSelector((store) => store.tag);
@@ -16,7 +17,7 @@ export const TagWidget = () => {
     if (tagsStatus === "idle") {
       dispatch(fetchTagList());
     }
-  }, [tagsStatus, dispatch]);
+  }, []);
 
   const contentColumn = [
     {
@@ -51,7 +52,7 @@ export const TagWidget = () => {
   return (
     <div>
       <Typography variant="h4">Tags</Typography>
-      {}
+
       <DataGrid
         sx={{ height: 320 }}
         rows={tags}

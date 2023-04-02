@@ -23,7 +23,6 @@ export const MapWindow = () => {
 
   useEffect(() => {
     setInterval(() => {
-      console.log(tags);
       dispatch(fetchTagList());
       setPositionByTags(
         tags.map((tag) =>

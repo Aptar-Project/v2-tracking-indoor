@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchSensor } from "../../features/sensor/sensorSlice";
 import { useParams } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 
 export const DetailSensorPage = () => {
-  const { detailSensor } = useSelector((store) => store.sensor);
+  const { detailSensor, loading } = useSelector((store) => store.sensor);
 
   const dispatch = useDispatch();
 
@@ -16,9 +17,7 @@ export const DetailSensorPage = () => {
 
   useEffect(() => {
     dispatch(fetchSensor(id));
-  }, [dispatch]);
-
-  console.log(detailSensor.posizione);
+  }, []);
 
   const columns = [
     { field: "latitudine", headerName: "Latitude", width: 200 },
@@ -46,39 +45,50 @@ export const DetailSensorPage = () => {
             <SensorsIcon /> Dettaglio Sensore
           </Typography>
         </Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Typography component="div">
-              <Box sx={{ mb: 1 }}>
-                <strong>Identification Code: </strong>
-                {detailSensor.identificationCode}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Frequenza: </strong>
-                {detailSensor.frequenza}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Protocollo: </strong>
-                {detailSensor.protocollo}
-              </Box>
-            </Typography>
+        {!loading ? (
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography component="div">
+                <Box sx={{ mb: 1 }}>
+                  <strong>Identification Code: </strong>
+                  {detailSensor.identificationCode}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Frequenza: </strong>
+                  {detailSensor.frequenza}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Protocollo: </strong>
+                  {detailSensor.protocollo}
+                </Box>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography component="div">
+                <Box sx={{ mb: 1 }}>
+                  <strong>Potenza Trasmissione: </strong>
+                  {detailSensor.potenzaTrasmissione}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Antenna: </strong> {detailSensor.antenna}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Alimentazione: </strong>
+                  {detailSensor.alimentazione}
+                </Box>
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography component="div">
-              <Box sx={{ mb: 1 }}>
-                <strong>Potenza Trasmissione: </strong>
-                {detailSensor.potenzaTrasmissione}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Antenna: </strong> {detailSensor.antenna}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Alimentazione: </strong>
-                {detailSensor.alimentazione}
-              </Box>
-            </Typography>
-          </Grid>
-        </Grid>
+        ) : (
+          <div style={{ marginLeft: "50%" }}>
+            <MoonLoader
+              color={"#3a3a47"}
+              loading={loading}
+              size={100}
+              className="centra"
+            />
+          </div>
+        )}
       </Box>
       <Box
         sx={{ p: 2, borderRadius: 1, boxShadow: 1 }}
@@ -98,14 +108,16 @@ export const DetailSensorPage = () => {
             rowsPerPageOptions={[5]}
           />
         ) : (
-          <>
-            <DataGrid
-              sx={{ height: 100 }}
-              rows={[]}
-              columns={columns}
-              pageSize={10}
-            />
-          </>
+          <Container>
+            <div style={{ marginLeft: "50%" }}>
+              <MoonLoader
+                color={"#3a3a47"}
+                loading={loading}
+                size={100}
+                className="centra"
+              />
+            </div>
+          </Container>
         )}
       </Box>
     </Container>
