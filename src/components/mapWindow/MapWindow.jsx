@@ -1,13 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MapContainer, ImageOverlay, Marker, Polyline } from "react-leaflet";
 import { Container } from "@mui/system";
 import "./mapWindow.css";
 import { useEffect, useState } from "react";
+import { fetchTagList } from "../../features/tag/tagSlice";
+import { Typography } from "@mui/material";
 
 export const MapWindow = () => {
   const { center, zoom, image, crs, imageBounds, marker } = useSelector(
     (store) => store.map
   );
+
+  const dispatch = useDispatch();
 
   const { tags, tagsIcon } = useSelector((store) => store.tag);
   const { sensors, sensorIcon } = useSelector((store) => store.sensor);
@@ -18,7 +22,9 @@ export const MapWindow = () => {
   const [positionBySensors, setPositionBySensors] = useState([]);
 
   useEffect(() => {
-    setInterval(
+    setInterval(() => {
+      console.log(tags);
+      dispatch(fetchTagList());
       setPositionByTags(
         tags.map((tag) =>
           tag.posizioni.map(
@@ -27,15 +33,16 @@ export const MapWindow = () => {
             }
           )
         )
-      ),
-      2000
-    );
+      );
+    }, 11000);
   }, [tags]);
 
   return (
     <>
-      <Container style={{ width: 800, height: 400, marginBottom: 100 }}>
-        <h1>Mappa</h1>
+      <Container
+        style={{ width: 750, height: 700, marginBottom: 100, marginTop: "5%" }}
+      >
+        <Typography variant="h2">Map</Typography>
         <MapContainer
           className="map-container"
           center={center}
@@ -58,7 +65,7 @@ export const MapWindow = () => {
                   lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
                 }}
               />
-              {positionByTags[0] ? (
+              {/* {positionByTags[0] ? (
                 <>
                   <Polyline
                     pathOptions={{
@@ -72,7 +79,7 @@ export const MapWindow = () => {
                 <>
                   <Polyline pathOptions={{ color: "red" }} positions={[]} />
                 </>
-              )}
+              )} */}
             </div>
           ))}
           {sensors.map((sensor) => (

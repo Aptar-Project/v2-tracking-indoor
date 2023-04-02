@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { Container, IconButton, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,16 +59,18 @@ export const SensorTable = () => {
   ];
 
   return (
-    <>
-      <h1>Sensors</h1>
+    <Container maxWidth="xl" sx={{ marginTop: "4%" }}>
+      <Typography variant="h3" gutterBottom>
+        Sensors
+      </Typography>
       <DataGrid
-        sx={{ height: 800 }}
+        sx={{ height: 680 }}
         getRowId={(row) => row.identificationCode}
         rows={sensors}
         columns={contentColumn.concat(viewColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
       />
-    </>
+    </Container>
   );
 };

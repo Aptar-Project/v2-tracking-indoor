@@ -1,10 +1,11 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { DataGrid } from "@mui/x-data-grid";
 import { fetchSensorList } from "../../features/sensor/sensorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const SensorWidget = () => {
   const { sensorStatus, sensors } = useSelector((store) => store.sensor);
@@ -21,7 +22,7 @@ export const SensorWidget = () => {
     {
       field: "identificationCode",
       headerName: "Identification Code",
-      width: 340,
+      width: 380,
     },
   ];
 
@@ -29,13 +30,18 @@ export const SensorWidget = () => {
     {
       field: "actions",
       headerName: "Actions",
-      with: 10,
       renderCell: (params) => {
         return (
           <div className="cellAction" style={{ display: "flex" }}>
-            <IconButton variant="outlined" size="small" className="viewButton">
-              <EditIcon className="icon" />
-            </IconButton>
+            <Link to={`sensors/${params.row.identificationCode}`}>
+              <IconButton
+                variant="outlined"
+                size="small"
+                className="viewButton"
+              >
+                <EditIcon className="icon" />
+              </IconButton>
+            </Link>
           </div>
         );
       },
@@ -43,15 +49,15 @@ export const SensorWidget = () => {
   ];
 
   return (
-    <div>
-      <h1>Sensor Widget</h1>
+    <div style={{ marginTop: "4%" }}>
+      <Typography variant="h4">Sensors</Typography>
       <DataGrid
-        sx={{ height: 400 }}
+        sx={{ height: 320, width: 500 }}
         rows={sensors}
         getRowId={(row) => row.identificationCode}
         columns={contentColumn.concat(viewColumn)}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={4}
+        rowsPerPageOptions={[4]}
       />
     </div>
   );

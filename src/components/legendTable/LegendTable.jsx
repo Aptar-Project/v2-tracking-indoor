@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -15,7 +16,9 @@ export const LegendTable = () => {
 
   return (
     <Container>
-      <h1>LegendTable</h1>
+      <Typography variant="h4" gutterBottom>
+        Legend
+      </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 10 }} aria-label="simple table">
           <TableHead>

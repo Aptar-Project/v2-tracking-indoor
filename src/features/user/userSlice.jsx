@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import javaAxios from "../../api/javaAxios";
 
 const LOGIN_API = "/auth/signin";
+const ACCOUNT_API = "/account/email/";
 
 const initialState = {
   email: "",
@@ -9,7 +10,25 @@ const initialState = {
   token: "",
   err: "",
   isLoggedIn: false,
+  account: {},
+  accountStatus: "idle",
 };
+
+export const fetchAccountByEmail = createAsyncThunk(
+  "account/fetchAccountByEmail",
+  async (_, { getState }) => {
+    const response = await javaAxios
+      .get(ACCOUNT_API + localStorage.getItem("email"), {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return response.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -30,10 +49,12 @@ export const userSlice = createSlice({
           { headers: { "Content-Type": "application/json" } }
         )
         .then((res) => {
+          localStorage.setItem("email", state.email);
           state.token = res.data.token;
           state.isLoggedIn = true;
           localStorage.setItem("token", res.data.token);
           state.loading = false;
+
           return "okay";
         })
         .catch((err) => {
@@ -47,6 +68,20 @@ export const userSlice = createSlice({
       state.isLoggedIn = false;
       window.location.reload();
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchAccountByEmail.pending, (state, action) => {
+        state.accountStatus = "loading";
+      })
+      .addCase(fetchAccountByEmail.fulfilled, (state, action) => {
+        state.accountStatus = "succeded";
+        state.account = action.payload;
+      })
+      .addCase(fetchAccountByEmail.rejected, (state, action) => {
+        state.accountStatus = "failed";
+        state.err = action.error.message;
+      });
   },
 });
 

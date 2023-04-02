@@ -12,7 +12,7 @@ export const MapPage = () => {
         <MapWindow />
         <LegendTable />
       </div>
-      <div>
+      <div style={{ marginTop: "4.5%" }}>
         <TagWidget />
         <SensorWidget />
       </div>

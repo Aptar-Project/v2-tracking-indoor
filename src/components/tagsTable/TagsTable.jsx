@@ -2,7 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTagList } from "../../features/tag/tagSlice";
-import { IconButton } from "@mui/material";
+import { Container, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 
@@ -64,16 +64,18 @@ export const TagsTable = () => {
   ];
 
   return (
-    <>
-      <h1>Tags</h1>
+    <Container maxWidth="xl" sx={{ marginTop: "4%" }}>
+      <Typography variant="h3" gutterBottom>
+        Tags
+      </Typography>
       <DataGrid
-        sx={{ height: 810 }}
+        sx={{ height: 680 }}
         rows={tags}
         getRowId={(row) => row.identificationCode}
         columns={contentColumn.concat(viewColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
       />
-    </>
+    </Container>
   );
 };

@@ -1,10 +1,11 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTagList } from "../../features/tag/tagSlice";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const TagWidget = () => {
   const { tagsStatus, tags } = useSelector((store) => store.tag);
@@ -21,7 +22,7 @@ export const TagWidget = () => {
     {
       field: "identificationCode",
       headerName: "Identification Code",
-      width: 340,
+      width: 380,
     },
   ];
 
@@ -29,13 +30,18 @@ export const TagWidget = () => {
     {
       field: "actions",
       headerName: "Actions",
-      with: 10,
       renderCell: (params) => {
         return (
           <div className="cellAction" style={{ display: "flex" }}>
-            <IconButton variant="outlined" size="small" className="viewButton">
-              <EditIcon className="icon" />
-            </IconButton>
+            <Link to={`tags/${params.row.identificationCode}`}>
+              <IconButton
+                variant="outlined"
+                size="small"
+                className="viewButton"
+              >
+                <EditIcon className="icon" />
+              </IconButton>
+            </Link>
           </div>
         );
       },
@@ -44,9 +50,9 @@ export const TagWidget = () => {
 
   return (
     <div>
-      <h1>TagWidget</h1>
+      <Typography variant="h4">Tags</Typography>
       <DataGrid
-        sx={{ height: 400 }}
+        sx={{ height: 320 }}
         rows={tags}
         getRowId={(row) => row.identificationCode}
         columns={contentColumn.concat(viewColumn)}

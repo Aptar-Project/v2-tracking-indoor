@@ -10,6 +10,7 @@ import { TagsPage } from "./pages/tagsPage/TagsPage";
 import { SensorPage } from "./pages/sensorsPage/SensorPage";
 import { DetailSensorPage } from "./pages/detailSensorPage/DetailSensorPage";
 import { DetailTagPage } from "./pages/detailTagPage/DetailTagPage";
+import { AccountPage } from "./pages/accountPage/AccountPage";
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
               <Route path="/tags/:id" element={<DetailTagPage />} />
               <Route path="/sensors" element={<SensorPage />} />
               <Route path="/sensors/:id" element={<DetailSensorPage />} />
-              <Route path="/account" element={<>suca</>} />
+              <Route path="/account" element={<AccountPage />} />
             </Route>
           </Route>
         </Routes>
