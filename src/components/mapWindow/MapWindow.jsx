@@ -10,9 +10,12 @@ export const MapWindow = () => {
   );
 
   const { tags, tagsIcon } = useSelector((store) => store.tag);
+  const { sensors, sensorIcon } = useSelector((store) => store.sensor);
 
   const [loadingPositions, setLoadingPositions] = useState(false);
   const [positionByTags, setPositionByTags] = useState([]);
+
+  const [positionBySensors, setPositionBySensors] = useState([]);
 
   useEffect(() => {
     setInterval(
@@ -25,7 +28,7 @@ export const MapWindow = () => {
           )
         )
       ),
-      1000
+      2000
     );
   }, [tags]);
 
@@ -45,6 +48,7 @@ export const MapWindow = () => {
           doubleClickZoom={() => disable}
         >
           <ImageOverlay url={image} bounds={imageBounds} />
+
           {tags.map((tag, index) => (
             <div key={index}>
               <Marker
@@ -57,7 +61,10 @@ export const MapWindow = () => {
               {positionByTags[0] ? (
                 <>
                   <Polyline
-                    pathOptions={{ color: "red" }}
+                    pathOptions={{
+                      color:
+                        "#" + Math.floor(Math.random() * 16777215).toString(16),
+                    }}
                     positions={positionByTags[index]}
                   />
                 </>
@@ -66,27 +73,18 @@ export const MapWindow = () => {
                   <Polyline pathOptions={{ color: "red" }} positions={[]} />
                 </>
               )}
-
-              {/* {tags[0] ? (
-                <Polyline
-                  pathOptions={{ color: "red" }}
-                  positions={positionByTags[index]}
-                />
-              ) : (
-                <></>
-              )} */}
             </div>
           ))}
-          {/* {sensors.map((sensor) => (
+          {sensors.map((sensor) => (
             <Marker
               key={sensor.identificationCode}
               icon={sensorIcon}
               position={{
-                lat: 0,
-                lng: 0,
+                lat: sensor.posizione.latitudine,
+                lng: sensor.posizione.longitudine,
               }}
             />
-          ))} */}
+          ))}
         </MapContainer>
       </Container>
     </>

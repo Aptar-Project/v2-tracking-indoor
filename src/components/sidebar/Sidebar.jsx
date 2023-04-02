@@ -44,13 +44,7 @@ export const Sidebar = () => {
               <span>Tags</span>
             </li>
           </NavLink>
-          <NavLink to="/positions" style={{ textDecoration: "none" }}>
-            <li>
-              <GroupIcon className="icon" />
-              <span>Cronologia posizioni</span>
-            </li>
-          </NavLink>
-          <NavLink to="/dashboard/leads" style={{ textDecoration: "none" }}>
+          <NavLink to="/account" style={{ textDecoration: "none" }}>
             <li>
               <GroupIcon className="icon" />
               <span>Account</span>

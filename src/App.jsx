@@ -24,6 +24,7 @@ const App = () => {
               <Route path="/tags/:id" element={<DetailTagPage />} />
               <Route path="/sensors" element={<SensorPage />} />
               <Route path="/sensors/:id" element={<DetailSensorPage />} />
+              <Route path="/account" element={<>suca</>} />
             </Route>
           </Route>
         </Routes>

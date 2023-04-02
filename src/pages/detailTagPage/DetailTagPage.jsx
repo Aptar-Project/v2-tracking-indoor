@@ -14,8 +14,6 @@ export const DetailTagPage = () => {
 
   const dispatch = useDispatch();
 
-  console.log(detailTag.posizioni);
-
   let { id } = useParams();
 
   useEffect(() => {
@@ -26,10 +24,10 @@ export const DetailTagPage = () => {
     {
       field: "identificationCode",
       headerName: "identificationCode",
-      width: 200,
+      width: 300,
     },
-    { field: "latitudine", headerName: "Latitude", width: 200 },
-    { field: "longitudine", headerName: "Longitude", width: 200 },
+    { field: "latitudine", headerName: "Latitude", width: 100 },
+    { field: "longitudine", headerName: "Longitude", width: 100 },
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
   return (
@@ -103,15 +101,14 @@ export const DetailTagPage = () => {
         <Typography variant="h4" gutterBottom>
           <ExploreIcon /> Cronologia Posizioni
         </Typography>
-
-        {/* PROBLEMA */}
         {detailTag.posizioni ? (
           <DataGrid
-            getRowId={(row) => row.timestamp}
-            rows={detailTag.posizioni}
+            getRowId={(row) => row.identificationCode}
+            rows={[...detailTag.posizioni]}
             columns={columns}
             pageSize={10}
-            sx={{ height: "auto" }}
+            rowsPerPageOptions={[5]}
+            sx={{ height: 1000 }}
           />
         ) : (
           <>
@@ -120,6 +117,7 @@ export const DetailTagPage = () => {
               rows={[]}
               columns={columns}
               pageSize={10}
+              rowsPerPageOptions={[5]}
               sx={{ height: "auto" }}
             />
           </>

@@ -1,7 +1,7 @@
 import { LegendTable } from "../../components/legendTable/LegendTable";
-import { MapWindow } from "../../components/mapWindow/MapWindow";
 import { SensorWidget } from "../../components/sensorWidget/SensorWidget";
 import { TagWidget } from "../../components/tagWidget/TagWidget";
+import { MapWindow } from "../../components/mapWindow/MapWindow";
 import "./mapPage.css";
 import "leaflet/dist/leaflet.css";
 

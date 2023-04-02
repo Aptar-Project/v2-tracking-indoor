@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 export const SensorWidget = () => {
-  const { sensorsStatus, sensors } = useSelector((store) => store.sensor);
+  const { sensorStatus, sensors } = useSelector((store) => store.sensor);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (sensorsStatus === "idle") {
+    if (sensorStatus === "idle") {
       dispatch(fetchSensorList());
     }
-  }, [sensorsStatus, dispatch]);
+  }, [sensorStatus, dispatch]);
 
   const contentColumn = [
     {
