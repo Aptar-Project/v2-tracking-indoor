@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const TagWidget = () => {
-  const { tagsStatus, tags } = useSelector((store) => store.tag);
+  const { tagsStatus, tags, loading } = useSelector((store) => store.tag);
 
   const dispatch = useDispatch();
 
@@ -51,6 +51,7 @@ export const TagWidget = () => {
   return (
     <div>
       <Typography variant="h4">Tags</Typography>
+      {}
       <DataGrid
         sx={{ height: 320 }}
         rows={tags}

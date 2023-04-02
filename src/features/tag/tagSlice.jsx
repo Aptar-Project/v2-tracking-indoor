@@ -6,7 +6,9 @@ import L from "leaflet";
 
 const initialState = {
   tags: [],
+  loading: false,
   tagsStatus: "idle",
+  status: "idle",
   error: null,
   tagsIcon: L.icon({
     iconUrl: tagsIcon,
@@ -53,25 +55,31 @@ export const tagSlice = createSlice({
     builder
       .addCase(fetchTagList.pending, (state, action) => {
         state.tagsStatus = "loading";
+        state.loading = true;
       })
       .addCase(fetchTagList.fulfilled, (state, action) => {
         state.tagsStatus = "succeded";
         state.tags = action.payload;
+        state.loading = false;
       })
       .addCase(fetchTagList.rejected, (state, action) => {
         state.tagsStatus = "failed";
         state.error = action.error.message;
+        state.loading = false;
       })
       .addCase(fetchTag.pending, (state, action) => {
         state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchTag.fulfilled, (state, action) => {
         state.status = "succeded";
         state.detailTag = action.payload;
+        state.loading = false;
       })
       .addCase(fetchTag.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+        state.loading = true;
       });
   },
 });

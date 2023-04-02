@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import SensorsIcon from "@mui/icons-material/Sensors";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { DataGrid } from "@mui/x-data-grid";
@@ -18,18 +18,19 @@ export const DetailSensorPage = () => {
     dispatch(fetchSensor(id));
   }, [dispatch]);
 
+  console.log(detailSensor.posizione);
+
   const columns = [
-    { field: "latitude", headerName: "Latitude", width: 200 },
-    { field: "longitude", headerName: "Longitude", width: 200 },
+    { field: "latitudine", headerName: "Latitude", width: 200 },
+    { field: "longitudine", headerName: "Longitude", width: 200 },
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
   return (
-    <>
+    <Container maxWidth="xl">
       <Box
         sx={{ p: 2, borderRadius: 1, boxShadow: 1 }}
         margin={4}
         marginTop={5}
-        maxWidth={1000}
       >
         <Box
           sx={{
@@ -83,18 +84,30 @@ export const DetailSensorPage = () => {
         sx={{ p: 2, borderRadius: 1, boxShadow: 1 }}
         margin={4}
         marginTop={5}
-        maxWidth={1000}
       >
         <Typography variant="h4" gutterBottom>
           <ExploreIcon /> Cronologia Posizioni
         </Typography>
-        <DataGrid
-          rows={[]}
-          columns={columns}
-          pageSize={10}
-          sx={{ height: "auto" }}
-        />
+        {detailSensor.posizione ? (
+          <DataGrid
+            sx={{ height: 400 }}
+            getRowId={(row) => row.identificationCode}
+            rows={[detailSensor.posizione]}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+          />
+        ) : (
+          <>
+            <DataGrid
+              sx={{ height: 100 }}
+              rows={[]}
+              columns={columns}
+              pageSize={10}
+            />
+          </>
+        )}
       </Box>
-    </>
+    </Container>
   );
 };

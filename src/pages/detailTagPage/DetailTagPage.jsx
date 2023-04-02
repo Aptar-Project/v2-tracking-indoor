@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { DataGrid } from "@mui/x-data-grid";
@@ -8,9 +8,10 @@ import { useParams } from "react-router-dom";
 import { fetchTag } from "../../features/tag/tagSlice";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import { MoonLoader } from "react-spinners";
 
 export const DetailTagPage = () => {
-  const { detailTag } = useSelector((store) => store.tag);
+  const { detailTag, loading } = useSelector((store) => store.tag);
 
   const dispatch = useDispatch();
 
@@ -19,6 +20,8 @@ export const DetailTagPage = () => {
   useEffect(() => {
     dispatch(fetchTag(id));
   }, [dispatch]);
+
+  console.log(loading);
 
   const columns = [
     {
@@ -31,12 +34,11 @@ export const DetailTagPage = () => {
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
   return (
-    <>
+    <Container maxWidth="xl">
       <Box
         sx={{ p: 2, borderRadius: 1, boxShadow: 1 }}
         margin={4}
-        marginTop={5}
-        maxWidth={1000}
+        marginTop={7}
       >
         <Box
           sx={{
@@ -55,48 +57,58 @@ export const DetailTagPage = () => {
             <EditIcon sx={{ color: "#6439ff" }} />
           </IconButton>
         </Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Typography component="div">
-              <Box sx={{ mb: 1 }}>
-                <strong>Identification Code: </strong>
-                {detailTag.identificationCode}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Frequenza: </strong>
-                {detailTag.frequenza}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Portata:</strong> {detailTag.portata}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Alimentazione:</strong> {detailTag.alimentazione}
-              </Box>
-            </Typography>
+        {!loading ? (
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography component="div">
+                <Box sx={{ mb: 1 }}>
+                  <strong>Identification Code: </strong>
+                  {detailTag.identificationCode}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Frequenza: </strong>
+                  {detailTag.frequenza}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Portata:</strong> {detailTag.portata}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Alimentazione:</strong> {detailTag.alimentazione}
+                </Box>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography component="div">
+                <Box sx={{ mb: 1 }}>
+                  <strong>Resistenza Ambientale:</strong> {detailTag.resistenza}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Memoria:</strong> {detailTag.portata}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Chip:</strong> {detailTag.portata}
+                </Box>
+                <Box sx={{ mb: 1 }}>
+                  <strong>Antenna:</strong> {detailTag.portata}
+                </Box>
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography component="div">
-              <Box sx={{ mb: 1 }}>
-                <strong>Resistenza Ambientale:</strong> {detailTag.resistenza}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Memoria:</strong> {detailTag.portata}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Chip:</strong> {detailTag.portata}
-              </Box>
-              <Box sx={{ mb: 1 }}>
-                <strong>Antenna:</strong> {detailTag.portata}
-              </Box>
-            </Typography>
-          </Grid>
-        </Grid>
+        ) : (
+          <div style={{ marginLeft: "50%" }}>
+            <MoonLoader
+              color={"#3a3a47"}
+              loading={loading}
+              size={100}
+              className="centra"
+            />
+          </div>
+        )}
       </Box>
       <Box
         sx={{ p: 2, borderRadius: 1, boxShadow: 1 }}
         margin={4}
         marginTop={5}
-        maxWidth={1000}
       >
         <Typography variant="h4" gutterBottom>
           <ExploreIcon /> Cronologia Posizioni
@@ -111,18 +123,18 @@ export const DetailTagPage = () => {
             sx={{ height: 1000 }}
           />
         ) : (
-          <>
-            <DataGrid
-              getRowId={(row) => row.identificationCode}
-              rows={[]}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[5]}
-              sx={{ height: "auto" }}
-            />
-          </>
+          <Container>
+            <div style={{ marginLeft: "50%" }}>
+              <MoonLoader
+                color={"#3a3a47"}
+                loading={loading}
+                size={100}
+                className="centra"
+              />
+            </div>
+          </Container>
         )}
       </Box>
-    </>
+    </Container>
   );
 };

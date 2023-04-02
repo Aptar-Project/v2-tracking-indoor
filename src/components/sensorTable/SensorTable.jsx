@@ -24,13 +24,13 @@ export const SensorTable = () => {
       width: 250,
     },
     {
-      field: "latitudine",
-      headerName: "Latitudine",
+      field: "frequenza",
+      headerName: "Frequenza",
       width: 250,
     },
     {
-      field: "longitudine",
-      headerName: "Longitudine",
+      field: "protocollo",
+      headerName: "Protocollo",
       width: 250,
     },
   ];

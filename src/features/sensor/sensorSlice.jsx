@@ -8,6 +8,7 @@ const initialState = {
   sensors: [],
   sensorStatus: "idle",
   error: null,
+  loading: false,
   sensorIcon: L.icon({
     iconUrl: sensorIcon,
     iconSize: [50, 50],
