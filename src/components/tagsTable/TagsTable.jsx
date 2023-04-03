@@ -1,11 +1,16 @@
+// STYLESHEETS
 import { DataGrid } from "@mui/x-data-grid";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTagList } from "../../features/tag/tagSlice";
 import { Container, IconButton, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import { MoonLoader } from "react-spinners";
+
+// REACT ROUTER DOM
+import { Link } from "react-router-dom";
+
+// REACT REDUX
+import { fetchTagList } from "../../features/tag/tagSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export const TagsTable = () => {
   const { tagsStatus, tags, loading } = useSelector((store) => store.tag);
@@ -55,7 +60,7 @@ export const TagsTable = () => {
                 size="small"
                 className="viewButton"
               >
-                <EditIcon className="icon" />
+                <ArrowOutwardIcon className="icon" />
               </IconButton>
             </Link>
           </div>

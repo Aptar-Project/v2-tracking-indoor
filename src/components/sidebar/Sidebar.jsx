@@ -1,14 +1,18 @@
+// REACT ROUTER DOM
 import { NavLink } from "react-router-dom";
 
-// STYLESHEETS & ICONS
+// STYLESHEETS
 import "./sidebar.scss";
-import GroupIcon from "@mui/icons-material/Group";
+import { Typography } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonIcon from "@mui/icons-material/Person";
+import MapIcon from "@mui/icons-material/Map";
+import SensorsIcon from "@mui/icons-material/Sensors";
+import SellIcon from "@mui/icons-material/Sell";
+
+// REACT ROUTER DOM
 import { useDispatch } from "react-redux";
 import { userActions } from "../../features/user/userSlice";
-import { Typography } from "@mui/material";
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
@@ -18,7 +22,7 @@ export const Sidebar = () => {
       <div className="top">
         <NavLink to="/" style={{ textDecoration: "none", marginTop: "3%" }}>
           <Typography variant="h6" className="logo">
-            Aptar ITS V 2.0
+            Aptar ITS
           </Typography>
         </NavLink>
       </div>
@@ -31,25 +35,25 @@ export const Sidebar = () => {
             className={({ isActive }) => (isActive ? "link active" : "link")}
           >
             <li>
-              <DashboardIcon className="icon" />
+              <MapIcon className="icon" />
               <Typography variant="span"> Mappa</Typography>
             </li>
           </NavLink>
           <NavLink to="/sensors" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineIcon className="icon" />
+              <SensorsIcon className="icon" />
               <Typography variant="span"> Sensori</Typography>
             </li>
           </NavLink>
           <NavLink to="/tags" style={{ textDecoration: "none" }}>
             <li>
-              <GroupIcon className="icon" />
+              <SellIcon className="icon" />
               <Typography variant="span"> Tags</Typography>
             </li>
           </NavLink>
           <NavLink to="/account" style={{ textDecoration: "none" }}>
             <li>
-              <GroupIcon className="icon" />
+              <PersonIcon className="icon" />
               <Typography variant="span"> Account</Typography>
             </li>
           </NavLink>

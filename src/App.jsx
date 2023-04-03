@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-//STYLESHEETS
+// STYLESHEETS
 import "./App.css";
+
+// PAGES
 import { LoginPage } from "./pages/loginPage/LoginPage";
 import { RequireAuth } from "./components/requireAuth/RequireAuth";
 import { BasePage } from "./pages/basePage/BasePage";

@@ -1,13 +1,17 @@
+// STYLESHEETS
 import { Container, Paper, Box, Avatar, Grid, Typography } from "@mui/material";
+import { MoonLoader } from "react-spinners";
+
+// REACT-REDUX
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import userSlice, { fetchAccountByEmail } from "../../features/user/userSlice";
-import { MoonLoader } from "react-spinners";
+import { fetchAccountByEmail } from "../../features/user/userSlice";
 
 export const AccountPage = () => {
   const { account, accountStatus, loading } = useSelector(
     (store) => store.user
   );
+
   const dispatch = useDispatch();
   const [accountUser, setAccountUser] = useState({});
 

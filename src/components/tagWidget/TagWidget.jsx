@@ -1,15 +1,18 @@
-import { IconButton, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-
+// STYLESHEETS
 import { DataGrid } from "@mui/x-data-grid";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTagList } from "../../features/tag/tagSlice";
-import { useEffect } from "react";
+import { IconButton, Typography } from "@mui/material";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+
+// REACT ROUTER DOM
 import { Link } from "react-router-dom";
-import { MoonLoader } from "react-spinners";
+
+// REACT REDUX
+import { fetchTagList } from "../../features/tag/tagSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export const TagWidget = () => {
-  const { tagsStatus, tags, loading } = useSelector((store) => store.tag);
+  const { tagsStatus, tags } = useSelector((store) => store.tag);
 
   const dispatch = useDispatch();
 
@@ -40,7 +43,7 @@ export const TagWidget = () => {
                 size="small"
                 className="viewButton"
               >
-                <EditIcon className="icon" />
+                <ArrowOutwardIcon className="icon" />
               </IconButton>
             </Link>
           </div>
@@ -52,7 +55,6 @@ export const TagWidget = () => {
   return (
     <div>
       <Typography variant="h4">Tags</Typography>
-
       <DataGrid
         sx={{ height: 320 }}
         rows={tags}

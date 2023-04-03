@@ -1,3 +1,7 @@
+// REDUX
+import { useSelector } from "react-redux";
+
+// STYLESHEETS
 import {
   Container,
   Paper,
@@ -9,7 +13,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 
 export const LegendTable = () => {
   const { rows } = useSelector((store) => store.legend);

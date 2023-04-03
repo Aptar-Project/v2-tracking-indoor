@@ -1,12 +1,16 @@
-import { IconButton, Typography } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-
+// STYLESHEETS
 import { DataGrid } from "@mui/x-data-grid";
+import { IconButton, Typography } from "@mui/material";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import { MoonLoader } from "react-spinners";
+
+// REACT ROUTER DOM
+import { Link } from "react-router-dom";
+
+// REACT REDUX
 import { fetchSensorList } from "../../features/sensor/sensorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { MoonLoader } from "react-spinners";
 
 export const SensorWidget = () => {
   const { sensorStatus, sensors, loading } = useSelector(
@@ -42,7 +46,7 @@ export const SensorWidget = () => {
                 size="small"
                 className="viewButton"
               >
-                <EditIcon className="icon" />
+                <ArrowOutwardIcon className="icon" />
               </IconButton>
             </Link>
           </div>

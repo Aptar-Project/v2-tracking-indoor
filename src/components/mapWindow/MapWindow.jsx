@@ -1,48 +1,41 @@
-import { useDispatch, useSelector } from "react-redux";
-import { MapContainer, ImageOverlay, Marker, Polyline } from "react-leaflet";
-import { Container } from "@mui/system";
-import "./mapWindow.css";
-import { useEffect, useState } from "react";
+// REACT REDUX
 import { fetchTagList } from "../../features/tag/tagSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
+// LEAFLEET
+import { MapContainer, ImageOverlay, Marker, Polyline } from "react-leaflet";
+
+// STYLESHEETS
+import "./mapWindow.css";
+import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
 
 export const MapWindow = () => {
-  const { center, zoom, image, crs, imageBounds, marker } = useSelector(
+  // SELECTOR REDUX
+  const { center, zoom, image, crs, imageBounds } = useSelector(
     (store) => store.map
   );
-
-  const dispatch = useDispatch();
-
   const { tags, tagsIcon } = useSelector((store) => store.tag);
   const { sensors, sensorIcon } = useSelector((store) => store.sensor);
 
-  const [loadingPositions, setLoadingPositions] = useState(false);
-  const [positionByTags, setPositionByTags] = useState([]);
+  const dispatch = useDispatch();
 
-  const [positionBySensors, setPositionBySensors] = useState([]);
+  const [positionByTags, setPositionByTags] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(fetchTagList());
       setPositionByTags(
         tags.map((tag) =>
-          tag.posizioni.map(
-            ({ latitudine, longitudine, identificationCode, timestamp }) => {
-              return { lat: latitudine, lng: longitudine };
-            }
-          )
+          tag.posizioni.map(({ latitudine, longitudine }) => {
+            return { lat: latitudine, lng: longitudine };
+          })
         )
       );
-    }, 6000);
+    }, 10000);
     return () => clearInterval(interval);
   }, [tags]);
-
-  const Test = () => {
-    return console.log(positionByTags);
-  };
-  const TestCheck = () => {
-    return console.log("test check");
-  };
 
   return (
     <>
@@ -62,35 +55,37 @@ export const MapWindow = () => {
           doubleClickZoom={() => disable}
         >
           <ImageOverlay url={image} bounds={imageBounds} />
-
-          {tags.map((tag, index) => (
-            <div key={index}>
-              <Marker
-                icon={tagsIcon}
-                position={{
-                  lat: tag.posizioni[tag.posizioni.length - 1].latitudine,
-                  lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
-                }}
-              />
-              {positionByTags[0] ? (
-                <>
-                  <Polyline
-                    pathOptions={{
-                      color:
-                        "#" + Math.floor(Math.random() * 16777215).toString(16),
-                    }}
-                    positions={positionByTags[index]}
-                  />
-                  <TestCheck />
-                </>
-              ) : (
-                <>
-                  <Test />
-                  <Polyline pathOptions={{ color: "red" }} positions={[]} />
-                </>
-              )}
-            </div>
-          ))}
+          {tags[0] ? (
+            tags.map((tag, index) => (
+              <div key={index}>
+                <Marker
+                  icon={tagsIcon}
+                  position={{
+                    lat: tag.posizioni[tag.posizioni.length - 1].latitudine,
+                    lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
+                  }}
+                />
+                {positionByTags[0] ? (
+                  <>
+                    <Polyline
+                      pathOptions={{
+                        color:
+                          "#" +
+                          Math.floor(Math.random() * 16777215).toString(16),
+                      }}
+                      positions={positionByTags[index]}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Polyline pathOptions={{ color: "red" }} positions={[]} />
+                  </>
+                )}
+              </div>
+            ))
+          ) : (
+            <></>
+          )}
           {sensors.map((sensor) => (
             <Marker
               key={sensor.identificationCode}

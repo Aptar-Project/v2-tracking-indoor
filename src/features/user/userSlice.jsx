@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
         { headers: { "Content-Type": "application/json" } }
       )
       .then((res) => {
-        localStorage.setItem("email", state.email);
+        localStorage.setItem("email", state.user.email);
         state.token = res.data.token;
         state.isLoggedIn = true;
         localStorage.setItem("token", res.data.token);

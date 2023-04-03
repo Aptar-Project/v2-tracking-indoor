@@ -1,15 +1,18 @@
+// STYLESHEETS
+import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExploreIcon from "@mui/icons-material/Explore";
-import { DataGrid } from "@mui/x-data-grid";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { MoonLoader } from "react-spinners";
+
+//REACT ROUTER DOM
+import { useParams } from "react-router-dom";
+
+// REACT REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { fetchTag } from "../../features/tag/tagSlice";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import { MoonLoader } from "react-spinners";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 export const DetailTagPage = () => {
   const { detailTag, loading } = useSelector((store) => store.tag);
@@ -36,6 +39,7 @@ export const DetailTagPage = () => {
     { field: "longitudine", headerName: "Longitude", width: 100 },
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
+
   return (
     <Container maxWidth="xl">
       <Box
@@ -56,9 +60,6 @@ export const DetailTagPage = () => {
           <Typography variant="h4">
             <LocalOfferIcon /> Dettaglio Tag
           </Typography>
-          <IconButton>
-            <EditIcon sx={{ color: "#6439ff" }} />
-          </IconButton>
         </Box>
         {!loading ? (
           <Grid container spacing={2}>

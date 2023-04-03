@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
+// REDUCERS
 import userReducer from "./features/user/userSlice";
 import mapReducer from "./features/map/mapSlice";
 import legendReducer from "./features/legend/legendSlice";
@@ -15,5 +16,5 @@ export const store = configureStore({
     sensor: sensorReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+    getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }),
 });

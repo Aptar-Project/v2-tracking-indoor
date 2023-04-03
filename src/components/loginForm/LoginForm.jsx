@@ -1,6 +1,9 @@
+// REACTS REDUX
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, userActions } from "../../features/user/userSlice";
+
+// REACT-ROUTER-DOM
 import { useNavigate } from "react-router-dom";
 
 //STYLESHEETS
@@ -17,14 +20,16 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoginIcon from "@mui/icons-material/Login";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
 import BeatLoader from "react-spinners/BeatLoader";
 
 export const LoginForm = () => {
   const { err, loading } = useSelector((store) => store.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -127,13 +132,6 @@ export const LoginForm = () => {
               <p>sign in</p>
             )}
           </Button>
-          {/* <Button
-            p="true"
-            sx={{ marginTop: 3, borderRadius: 3 }}
-            endIcon={<HowToRegIcon />}
-            >
-            Change to Signup
-          </Button> */}
         </FormControl>
       </Box>
     </form>

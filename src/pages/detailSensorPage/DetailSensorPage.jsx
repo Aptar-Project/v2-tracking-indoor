@@ -1,12 +1,17 @@
+// STYLESHEETS
+import { DataGrid } from "@mui/x-data-grid";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import SensorsIcon from "@mui/icons-material/Sensors";
 import ExploreIcon from "@mui/icons-material/Explore";
-import { DataGrid } from "@mui/x-data-grid";
+import { MoonLoader } from "react-spinners";
+
+//REACT ROUTER DOM
+import { useParams } from "react-router-dom";
+
+// REACT REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchSensor } from "../../features/sensor/sensorSlice";
-import { useParams } from "react-router-dom";
-import { MoonLoader } from "react-spinners";
 
 export const DetailSensorPage = () => {
   const { detailSensor, loading } = useSelector((store) => store.sensor);
@@ -24,6 +29,7 @@ export const DetailSensorPage = () => {
     { field: "longitudine", headerName: "Longitude", width: 200 },
     { field: "timestamp", headerName: "Timestamp", width: 300 },
   ];
+
   return (
     <Container maxWidth="xl">
       <Box

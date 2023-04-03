@@ -1,6 +1,11 @@
+// REACT ROUTER DOM
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "../../components/sidebar/Sidebar";
+
+// STYLESHEETS
 import "./basePage.scss";
+
+// COMPONENTS
+import { Sidebar } from "../../components/sidebar/Sidebar";
 
 export const BasePage = () => {
   return (
