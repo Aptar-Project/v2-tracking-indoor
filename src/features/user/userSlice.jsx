@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import javaAxios from "../../api/javaAxios";
+import { StarRateTwoTone } from "@mui/icons-material";
 
 const LOGIN_API = "/auth/signin";
 const ACCOUNT_API = "/account/email/";
@@ -56,9 +57,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setEmail(state, input) {
+      state.err = "";
       state.email = input.payload;
     },
     setPwd(state, input) {
+      state.err = "";
       state.pwd = input.payload;
     },
 
