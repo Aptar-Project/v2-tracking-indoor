@@ -68,6 +68,7 @@ export const userSlice = createSlice({
     logout(state) {
       state.token = "";
       localStorage.removeItem("token");
+      localStorage.removeItem("email");
       state.isLoggedIn = false;
       window.location.reload();
     },
