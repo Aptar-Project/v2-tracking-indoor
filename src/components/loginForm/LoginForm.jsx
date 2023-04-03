@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../features/user/userSlice";
+import { login, userActions } from "../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 //STYLESHEETS
@@ -21,10 +21,10 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import BeatLoader from "react-spinners/BeatLoader";
 
 export const LoginForm = () => {
+  const { err, loading } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -33,10 +33,8 @@ export const LoginForm = () => {
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        setLoading(true);
-        dispatch(userActions.login());
+        dispatch(login());
         setTimeout(() => {
-          setLoading(false);
           if (localStorage.getItem("token")) {
             navigate("/");
           }
@@ -67,6 +65,9 @@ export const LoginForm = () => {
           sx={{ color: "#6439ff" }}
         >
           Sign In
+        </Typography>
+        <Typography variant="span" color={"red"}>
+          {err}
         </Typography>
         <FormControl sx={{ m: 1, width: "22ch" }} variant="standard">
           <InputLabel htmlFor="email">Email</InputLabel>

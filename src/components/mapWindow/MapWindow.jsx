@@ -22,7 +22,7 @@ export const MapWindow = () => {
   const [positionBySensors, setPositionBySensors] = useState([]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       dispatch(fetchTagList());
       setPositionByTags(
         tags.map((tag) =>
@@ -33,8 +33,16 @@ export const MapWindow = () => {
           )
         )
       );
-    }, 11000);
+    }, 6000);
+    return () => clearInterval(interval);
   }, [tags]);
+
+  const Test = () => {
+    return console.log(positionByTags);
+  };
+  const TestCheck = () => {
+    return console.log("test check");
+  };
 
   return (
     <>
@@ -64,7 +72,7 @@ export const MapWindow = () => {
                   lng: tag.posizioni[tag.posizioni.length - 1].longitudine,
                 }}
               />
-              {/* {positionByTags[0] ? (
+              {positionByTags[0] ? (
                 <>
                   <Polyline
                     pathOptions={{
@@ -73,12 +81,14 @@ export const MapWindow = () => {
                     }}
                     positions={positionByTags[index]}
                   />
+                  <TestCheck />
                 </>
               ) : (
                 <>
+                  <Test />
                   <Polyline pathOptions={{ color: "red" }} positions={[]} />
                 </>
-              )} */}
+              )}
             </div>
           ))}
           {sensors.map((sensor) => (

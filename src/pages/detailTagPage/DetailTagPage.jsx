@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,6 +9,7 @@ import { fetchTag } from "../../features/tag/tagSlice";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { MoonLoader } from "react-spinners";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 export const DetailTagPage = () => {
   const { detailTag, loading } = useSelector((store) => store.tag);
@@ -20,6 +21,10 @@ export const DetailTagPage = () => {
   useEffect(() => {
     dispatch(fetchTag(id));
   }, []);
+
+  const handleReload = () => {
+    dispatch(fetchTag(id));
+  };
 
   const columns = [
     {
@@ -110,7 +115,23 @@ export const DetailTagPage = () => {
       >
         <Typography variant="h4" gutterBottom>
           <ExploreIcon /> Cronologia Posizioni
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<AutorenewIcon />}
+            onClick={() => handleReload()}
+            sx={{
+              backgroundColor: "#6439ff",
+              marginX: 5,
+              "&:hover": {
+                backgroundColor: "#6439ff",
+              },
+            }}
+          >
+            Reload
+          </Button>
         </Typography>
+
         {detailTag.posizioni ? (
           <DataGrid
             getRowId={(row) => row.identificationCode}

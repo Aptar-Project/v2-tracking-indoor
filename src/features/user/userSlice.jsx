@@ -15,6 +15,26 @@ const initialState = {
   accountStatus: "idle",
 };
 
+export const login = createAsyncThunk(
+  "account/login",
+  async (arg, { getState }) => {
+    const state = getState();
+    await javaAxios
+      .post(
+        LOGIN_API,
+        JSON.stringify({ email: state.user.email, password: state.user.pwd }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        localStorage.setItem("email", state.email);
+        state.token = res.data.token;
+        state.isLoggedIn = true;
+        localStorage.setItem("token", res.data.token);
+        state.loading = false;
+      });
+  }
+);
+
 export const fetchAccountByEmail = createAsyncThunk(
   "account/fetchAccountByEmail",
   async (_, { getState }) => {
@@ -41,28 +61,7 @@ export const userSlice = createSlice({
     setPwd(state, input) {
       state.pwd = input.payload;
     },
-    async login(state) {
-      state.loading = true;
-      await javaAxios
-        .post(
-          LOGIN_API,
-          JSON.stringify({ email: state.email, password: state.pwd }),
-          { headers: { "Content-Type": "application/json" } }
-        )
-        .then((res) => {
-          localStorage.setItem("email", state.email);
-          state.token = res.data.token;
-          state.isLoggedIn = true;
-          localStorage.setItem("token", res.data.token);
-          state.loading = false;
 
-          return "okay";
-        })
-        .catch((err) => {
-          state.loading = false;
-          throw err;
-        });
-    },
     logout(state) {
       state.token = "";
       localStorage.removeItem("token");
@@ -85,6 +84,20 @@ export const userSlice = createSlice({
         state.accountStatus = "failed";
         state.err = action.error.message;
         state.loading = true;
+      })
+      .addCase(login.pending, (state, action) => {
+        state.accountStatus = "loading";
+        state.loading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.accountStatus = "succeded";
+        state.account = action.payload;
+        state.loading = false;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.accountStatus = "failed";
+        state.err = action.error.message;
+        state.loading = false;
       });
   },
 });
