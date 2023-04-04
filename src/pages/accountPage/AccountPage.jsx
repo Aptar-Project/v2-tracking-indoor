@@ -56,7 +56,7 @@ export const AccountPage = () => {
               >
                 <Avatar
                   sx={{ width: 130, height: 130 }}
-                  src={"" + accountUser.immagineUtente + ""}
+                  src={"" + accountUser?.immagineUtente + ""}
                 />
               </Box>
             </Grid>
